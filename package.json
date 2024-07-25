@@ -1,0 +1,16 @@
+{
+  "name": "administrador-productos-backend",
+  "version": "1.0.0",
+  "description": "Rest API Express y TypeScript",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec ts-node src/index.ts"
+  },
+  "author": "Bryan Gallo",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
