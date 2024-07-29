@@ -1,9 +1,8 @@
 import express from "express";
+import router from "./routes/router";
 
 const server = express();
 
-server.get("/", (req, res) => {
-    res.send("Hola desde Express");
-});
+server.use("/api/products", router);
 
 export default server;
