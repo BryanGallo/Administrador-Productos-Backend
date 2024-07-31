@@ -1,15 +1,14 @@
 import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 
-const db = new Sequelize(
-    "postgresql://rest_api_node_typescript_bxyg_user:3dw609JR25LgYJxQBVvcw7wnvLtBSbKC@dpg-cqkrslogph6c738k9bg0-a.oregon-postgres.render.com/rest_api_node_typescript_bxyg?ssl=true",
-    //segunda opcion para el error de conexion de bbd
-    // {
-    //     dialectOptions: {
-    //         ssl: {
-    //             require: false,
-    //         },
-    //     },
-    // }
-);
+dotenv.config();
+// Verificar que la variable de entorno se haya cargado correctamente
+if (!process.env.DATABASE_URL) {
+    throw new Error(
+        "DATABASE_URL no está definida en las variables de entorno"
+    );
+}
+
+const db = new Sequelize(process.env.DATABASE_URL);
 
 export default db;
