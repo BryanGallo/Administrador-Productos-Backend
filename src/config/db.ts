@@ -9,6 +9,9 @@ if (!process.env.DATABASE_URL) {
     );
 }
 
-const db = new Sequelize(process.env.DATABASE_URL);
+const db = new Sequelize(process.env.DATABASE_URL,{
+    // para generar el modelo y las columnas __dirname(propio de nodejs)
+    models: [__dirname + "/../models/**/*.ts"], // Ruta a los modelos de Sequelize
+});
 
 export default db;
