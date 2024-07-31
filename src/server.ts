@@ -16,7 +16,10 @@ async function connectDB() {
 
 connectDB();
 
+//Instancia de Express
 const server = express();
+
+server.use(express.json());
 
 server.use("/api/products", router);
 
