@@ -1,7 +1,8 @@
+import colors from "colors";
 import server from "./server";
 
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 server.listen(port, () => {
-    console.log(`Conexion por el puerto ${port}`);
+    console.log(colors.cyan.italic(`Conexion por el puerto ${port}`));
 });
