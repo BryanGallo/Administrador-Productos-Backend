@@ -8,12 +8,21 @@ const createProduct = async (req: Request, res: Response) => {
     const { name } = req.body;
 
     //*Forma 1 de insertar usando new
-    const product = new Product(req.body);
+    // const product = new Product(req.body);
+    // console.log(colors.magenta(`${product}`));
+    // const savedProduct = await product.save();
+    // res.status(200).json({
+    //     msg: `Se creo el producto ${name} exitosamente`,
+    //     data: savedProduct,
+    // });
+
+    //*Forma 2 de insertar usando create
+    const product = await Product.create(req.body);
     console.log(colors.magenta(`${product}`));
-    const savedProduct = await product.save();
+
     res.status(200).json({
         msg: `Se creo el producto ${name} exitosamente`,
-        data: savedProduct,
+        data: product,
     });
 };
 
