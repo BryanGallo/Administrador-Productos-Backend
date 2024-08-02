@@ -7,7 +7,7 @@ async function connectDB() {
     try {
         await db.authenticate();
         db.sync();
-        console.log(colors.cyan.italic("Conexion a la base de datos exitosa"));
+        // console.log(colors.cyan.italic("Conexion a la base de datos exitosa"));
     } catch (error) {
         // console.log(error);
         console.log(colors.red.italic("Error al conectar a la bdd"));
@@ -22,5 +22,10 @@ const server = express();
 server.use(express.json());
 
 server.use("/api/products", router);
+
+
+// server.get("/api", (req, res) => {
+//     res.json({ msg: "API funcionando" });
+// });
 
 export default server;
