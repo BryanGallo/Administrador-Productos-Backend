@@ -33,8 +33,8 @@ router.post(
     body("price")
         .isNumeric()
         .withMessage("Valor no válido")
-        .custom((value) => value >= 0)
-        .withMessage("El precio no puede ser menor a 0")
+        .custom((value) => value > 0)
+        .withMessage("El precio no puede ser menor o igual a 0")
         .notEmpty()
         .withMessage("El precio del producto no puede ir vacio"),
     handleInputErrors,
@@ -50,8 +50,8 @@ router.put(
     body("price")
         .isNumeric()
         .withMessage("Valor no válido")
-        .custom((value) => value >= 0)
-        .withMessage("El precio no puede ser menor a 0")
+        .custom((value) => value > 0)
+        .withMessage("El precio no puede ser menor o igual a 0")
         .notEmpty()
         .withMessage("El precio del producto no puede ir vacio"),
     body("availability").isBoolean().withMessage("Valor no válido"),

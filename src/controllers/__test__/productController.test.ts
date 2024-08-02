@@ -2,7 +2,7 @@ import request from "supertest";
 import server from "../../server";
 
 describe("POST /api/products", () => {
-    //?Probado Validacion
+    //?Pruebas Validacion objeto vacio
     it("should display validation errors", async () => {
         const response = await request(server).post("/api/products").send({});
         expect(response.status).toBe(400);
@@ -13,7 +13,35 @@ describe("POST /api/products", () => {
         expect(response.body.errors).not.toHaveLength(2);
     });
 
-    //?Probado EndPoint
+    //?Pruebas Validacion si envia un texto a diferencia de numero
+    it("should validate that the price is a number and greather than 0", async () => {
+        const response = await request(server).post("/api/products").send({
+            name: "Mouse Testing",
+            price: "Hola",
+        });
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("errors");
+        expect(response.body.errors).toHaveLength(2);
+
+        expect(response.status).not.toBe(200);
+        expect(response.body.errors).not.toHaveLength(3);
+    });
+
+    //?Pruebas Validacion si envia 0 o menor
+    it("should validate that the price is greater than 0", async () => {
+        const response = await request(server).post("/api/products").send({
+            name: "Mouse Testing",
+            price: 0,
+        });
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("errors");
+        expect(response.body.errors).toHaveLength(1);
+
+        expect(response.status).not.toBe(200);
+        expect(response.body.errors).not.toHaveLength(2);
+    });
+
+    //?Pruebas EndPoint
     it("should create a new product", async () => {
         const response = await request(server).post("/api/products").send({
             name: "Mouse Testing",
