@@ -76,7 +76,7 @@ const createProduct = async (req: Request, res: Response) => {
     // const product = new Product(req.body);
     // console.log(colors.magenta(`${product}`));
     // const savedProduct = await product.save();
-    // res.status(200).json({
+    // res.status(201).json({
     //     msg: `Se creo el producto ${name} exitosamente`,
     //     data: savedProduct,
     // });
@@ -84,8 +84,8 @@ const createProduct = async (req: Request, res: Response) => {
     //*Forma 2 de insertar usando create
     try {
         const product = await Product.create(req.body);
-
-        res.status(200).json({
+        //?En creacion se debe retornar el 201
+        res.status(201).json({
             msg: `Se creo el producto ${name} exitosamente`,
             data: product,
         });
