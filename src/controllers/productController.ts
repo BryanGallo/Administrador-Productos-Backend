@@ -131,7 +131,7 @@ const updateAvailability = async (req: Request, res: Response) => {
         //*Actualizar con patch
         //? debemos enviar un req.body
         // product.availability = req.body.availability
-        
+
         //?usando dataValues para no tener que enviar un req.body ya que simplemente pondra el valor contrario al que posee esto debido a que es boolean
         product.availability = !product.dataValues.availability;
         await product.save();
@@ -144,10 +144,32 @@ const updateAvailability = async (req: Request, res: Response) => {
     }
 };
 
+const deleteProduct = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        const product = await Product.findByPk(id);
+        if (!product) {
+            return res.status(404).json({
+                error: `No existe un producto con el id ${id}`,
+            });
+        }
+
+        await product.destroy();
+
+        res.status(200).json({
+            msg: "Producto eliminado correctamente",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 export {
     getProducts,
     getProductById,
     createProduct,
     updateProduct,
     updateAvailability,
+    deleteProduct,
 };
