@@ -2,6 +2,19 @@ import { Request, Response } from "express";
 import Product from "../models/Product.model";
 import colors from "colors";
 
+const getProducts = async (req: Request, res: Response) => {
+    try {
+        const products = await Product.findAll({
+            attributes: ["id", "name", "price", "description"],
+        });
+        res.status(200).json({
+            data: products,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const createProduct = async (req: Request, res: Response) => {
     console.log(req.body);
 
@@ -61,4 +74,4 @@ const createProduct = async (req: Request, res: Response) => {
     }
 };
 
-export { createProduct };
+export { getProducts, createProduct };
