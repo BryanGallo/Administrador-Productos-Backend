@@ -94,4 +94,27 @@ const createProduct = async (req: Request, res: Response) => {
     }
 };
 
-export { getProducts, getProductById, createProduct };
+const updateProduct = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const product = await Product.findByPk(id, {
+            attributes: ["id", "name", "price", "description"],
+        });
+        if (!product) {
+            return res.status(404).json({
+                error: `No existe un producto con el id ${id}`,
+            });
+        }
+        //*put realiza modificaciones totales con lo que se envie con update te proteje y solo actualiza lo que envies aunque como existe validaciones no llegaria aca pero por seguridad adicional
+        await product.update(req.body);
+        await product.save();
+
+        res.status(200).json({
+            data: product,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export { getProducts, getProductById, createProduct, updateProduct };

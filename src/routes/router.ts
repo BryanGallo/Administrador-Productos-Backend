@@ -5,6 +5,7 @@ import {
     getProducts,
     getProductById,
     createProduct,
+    updateProduct,
 } from "../controllers/productController";
 
 const router = Router();
@@ -36,6 +37,23 @@ router.post(
         .withMessage("El precio del producto no puede ir vacio"),
     handleInputErrors,
     createProduct
+);
+
+router.put(
+    "/:id",
+    body("name")
+        .notEmpty()
+        .withMessage("El nombre del producto no puede ir vacio"),
+    body("price")
+        .isNumeric()
+        .withMessage("Valor no válido")
+        .custom((value) => value >= 0)
+        .withMessage("El precio no puede ser menor a 0")
+        .notEmpty()
+        .withMessage("El precio del producto no puede ir vacio"),
+    body("availability").isBoolean().withMessage("Valor no válido"),
+    handleInputErrors,
+    updateProduct
 );
 
 export default router;
