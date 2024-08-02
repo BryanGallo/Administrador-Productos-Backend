@@ -15,6 +15,26 @@ const getProducts = async (req: Request, res: Response) => {
     }
 };
 
+const getProductById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        const product = await Product.findByPk(id, {
+            attributes: ["id", "name", "price", "description"],
+        });
+        if (!product) {
+            return res.status(404).json({
+                error: `No existe un producto con el id ${id}`,
+            });
+        }
+        res.status(200).json({
+            data: product,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 const createProduct = async (req: Request, res: Response) => {
     console.log(req.body);
 
@@ -74,4 +94,4 @@ const createProduct = async (req: Request, res: Response) => {
     }
 };
 
-export { getProducts, createProduct };
+export { getProducts, getProductById, createProduct };
