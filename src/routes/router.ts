@@ -6,6 +6,7 @@ import {
     getProductById,
     createProduct,
     updateProduct,
+    updateAvailability,
 } from "../controllers/productController";
 
 const router = Router();
@@ -55,5 +56,7 @@ router.put(
     handleInputErrors,
     updateProduct
 );
+
+router.patch("/:id", updateAvailability);
 
 export default router;
