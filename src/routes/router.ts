@@ -7,6 +7,7 @@ import {
     createProduct,
     updateProduct,
     updateAvailability,
+    deleteProduct,
 } from "../controllers/productController";
 
 const router = Router();
@@ -42,6 +43,7 @@ router.post(
 
 router.put(
     "/:id",
+    param("id").isInt().withMessage("ID no válido"),
     body("name")
         .notEmpty()
         .withMessage("El nombre del producto no puede ir vacio"),
@@ -57,6 +59,13 @@ router.put(
     updateProduct
 );
 
-router.patch("/:id", updateAvailability);
+router.patch(
+    "/:id",
+    param("id").isInt().withMessage("ID no válido"),
+    handleInputErrors,
+    updateAvailability
+);
+
+router.delete("/:id", deleteProduct);
 
 export default router;
