@@ -55,3 +55,23 @@ describe("POST /api/products", () => {
         expect(response.body).not.toHaveProperty("error");
     });
 });
+
+describe("GET /api/products", () => {
+    it("should chck if api/products url exists", async () => {
+        const response = await request(server).get("/api/products");
+        3;
+        expect(response.status).not.toBe(404);
+    });
+    it("Get a JSON response with products", async () => {
+        const response = await request(server).get("/api/products");
+        expect(response.status).toBe(200);
+        expect(response.headers["content-type"]).toMatch(/json/);
+        expect(response.body).toHaveProperty("data");
+        expect(response.body.data).toHaveLength(1);
+
+        expect(response.status).not.toBe(404);
+        expect(response.headers["content-type"]).not.toMatch(/text/);
+        expect(response.body).not.toHaveProperty("errors");
+        expect(response.body.data).not.toHaveLength(2);
+    });
+});
