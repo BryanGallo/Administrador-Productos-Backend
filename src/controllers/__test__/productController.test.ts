@@ -75,3 +75,30 @@ describe("GET /api/products", () => {
         expect(response.body.data).not.toHaveLength(2);
     });
 });
+
+describe("GET /api/products/:id", () => {
+    it("should return a 404 response for a non-existent product", async () => {
+        const productId = 99;
+        const response = await request(server).get(`/api/products/${productId}`);
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe(`No existe un producto con el id ${productId}`);
+    });
+
+    it("shold check a valid ID in the URL",async ()=>{
+        const productId = "abc";
+        const response = await request(server).get(`/api/products/${productId}`);
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("errors")
+        expect(response.body.errors).toHaveLength(1)
+        expect(response.body.errors[0].msg).toBe('ID no válido')
+    })
+
+    it("get a JSON response for a single product",async ()=>{
+        const productId = 1;
+        const response = await request(server).get(`/api/products/${productId}`);
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("data")
+        expect(response.body.data).toHaveLength(4)
+    })
+});
