@@ -66,6 +66,11 @@ router.patch(
     updateAvailability
 );
 
-router.delete("/:id", deleteProduct);
+router.delete(
+    "/:id",
+    param("id").isInt().withMessage("ID no válido"),
+    handleInputErrors,
+    deleteProduct
+);
 
 export default router;
