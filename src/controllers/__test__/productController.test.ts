@@ -177,7 +177,7 @@ describe("PUT /api/products/:id", () => {
         expect(response.status).toBe(404);
         expect(response.body).toHaveProperty("error");
         expect(response.body.error).toBe("No existe un producto con el id 200");
-        
+
         expect(response.status).not.toBe(200);
         expect(response.body).not.toHaveProperty("data");
     });
@@ -198,5 +198,44 @@ describe("PUT /api/products/:id", () => {
 
         expect(response.status).not.toBe(404);
         expect(response.body).not.toHaveProperty("errors");
+    });
+});
+
+describe("DELET /api/products/:id", () => {
+    it("shold check a valid ID in the URL", async () => {
+        const productId = "abc";
+        const response = await request(server).delete(
+            `/api/products/${productId}`
+        );
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("errors");
+        expect(response.body.errors[0].msg).toBe("ID no válido");
+    });
+
+    it("should return a 404 response for a non-existent product", async () => {
+        const productId = 300;
+        const response = await request(server).delete(
+            `/api/products/${productId}`
+        );
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe(
+            `No existe un producto con el id ${productId}`
+        );
+
+        expect(response.status).not.toBe(200);
+    });
+
+    it("should delete a product", async () => {
+        const productId = 1;
+        const response = await request(server).delete(
+            `/api/products/${productId}`
+        );
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("msg");
+        expect(response.body.msg).toBe("Producto eliminado correctamente");
+
+        expect(response.status).not.toBe(404);
+        expect(response.body).not.toHaveProperty("error");
     });
 });
