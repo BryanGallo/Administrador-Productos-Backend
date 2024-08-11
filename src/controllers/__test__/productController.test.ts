@@ -201,7 +201,47 @@ describe("PUT /api/products/:id", () => {
     });
 });
 
-describe("DELET /api/products/:id", () => {
+describe("PATCH /api/products/:id", () => {
+    it("should return a 404 response for a non-existent product", async () => {
+        const productId = 2000;
+        const response = await request(server).patch(
+            `/api/products/${productId}`
+        );
+        expect(response.status).toBe(404);
+        expect(response.body).toHaveProperty("error");
+        expect(response.body.error).toBe(
+            `No existe un producto con el id ${productId}`
+        );
+
+        expect(response.status).not.toBe(200);
+        expect(response.body).not.toHaveProperty("data");
+    });
+
+    it("should update the availability of a product", async () => {
+        const productId = 1;
+        const response = await request(server)
+            .patch(`/api/products/${productId}`)
+            .send({ availability: true });
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty("data");
+        expect(response.body.data.availability).toBe(false);
+
+        expect(response.status).not.toBe(404);
+        expect(response.body).not.toHaveProperty("errors");
+    });
+
+    it("shold check a valid ID in the URL", async () => {
+        const productId = "abc";
+        const response = await request(server)
+            .patch(`/api/products/${productId}`)
+            .send({ availability: true });
+        expect(response.status).toBe(400);
+        expect(response.body).toHaveProperty("errors");
+        expect(response.body.errors[0].msg).toBe("ID no válido");
+    });
+});
+
+describe("DELETE /api/products/:id", () => {
     it("shold check a valid ID in the URL", async () => {
         const productId = "abc";
         const response = await request(server).delete(
