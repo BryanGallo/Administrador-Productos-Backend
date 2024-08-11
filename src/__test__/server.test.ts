@@ -12,6 +12,8 @@
 
 import request from "supertest";
 import server from "../server";
+import { connectDB } from "../server";
+import db from "../config/db";
 
 describe("GET /api", () => {
     it("Should send back a json response", async () => {
@@ -26,7 +28,25 @@ describe("GET /api", () => {
         console.log(res.body);
 
         //? Codigo que no debe cumplirse
-        expect(res.status).not.toBe(404)
-        expect(res.body.msg).not.toBe("api funcionando")
+        expect(res.status).not.toBe(404);
+        expect(res.body.msg).not.toBe("api funcionando");
+    });
+});
+
+//Mock Tecnica para las pruebas para simular el comportamietno de ciertos modulos en este entorno
+
+jest.mock("../config/db");
+
+describe("ConnectDB", () => {
+    it("Should connect to the database", async () => {
+        // spyOn crea una funcion en el ambiente del mock
+        jest.spyOn(db, "authenticate").mockRejectedValueOnce(
+            new Error("Error al conectar a la bdd")
+        );
+        const consoleSpy = jest.spyOn(console, "log");
+
+        await connectDB();
+
+        expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Hubo un error al conectar a la BD"));
     });
 });
