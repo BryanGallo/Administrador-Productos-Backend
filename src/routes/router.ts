@@ -12,6 +12,35 @@ import {
 
 const router = Router();
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *      Product:
+ *          type: object
+ *          properties:
+ *              id:
+ *                  type: integer
+ *                  description: The auto-generated id of the product
+ *              name:
+ *                  type: string
+ *                  description: The name of the product
+ *              price:
+ *                  type: number
+ *                  description: The price of the product
+ *              availability:
+ *                  type: boolean
+ *                  description: The availability of the product
+ *          required:
+ *              - name
+ *              - price
+ *          example:
+ *              id: 1
+ *              name: Product 1
+ *              price: 100
+ *              availability: true
+ */
+
 router.get("/", getProducts);
 
 router.get(
