@@ -31,6 +31,10 @@ const router = Router();
  *                  type: number
  *                  description: The price of the product
  *                  example: 300
+ *              description:
+ *                  type: string
+ *                  description: Description of the product
+ *                  example: Monitor Gaming 120HZ 1ms
  *              availability:
  *                  type: boolean
  *                  description: The availability of the product
@@ -38,10 +42,12 @@ const router = Router();
  *          required:
  *              - name
  *              - price
+ *              - description
  *          example:
  *              id: 1
  *              name: Monitor Curvo LG 49 pulgadas
  *              price: 300
+ *              description: Monitor Gaming 120HZ 1ms
  *              availability: true
  */
 
@@ -105,7 +111,7 @@ router.get("/", getProducts);
  *               properties:
  *                 error:
  *                   type: string
- *                   example: ID no válido  
+ *                   example: ID no válido
  */
 
 router.get(
@@ -115,7 +121,7 @@ router.get(
     getProductById
 );
 
-// router.post("/", createProduct);
+
 
 //Validacion con express-validator en el router
 //Router no es asyncrono asi que no usamos check usamos body
