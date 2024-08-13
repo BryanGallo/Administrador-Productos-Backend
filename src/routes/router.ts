@@ -21,24 +21,46 @@ const router = Router();
  *          properties:
  *              id:
  *                  type: integer
- *                  description: The auto-generated id of the product
+ *                  description: The Product auto-generated id
+ *                  example: 1
  *              name:
  *                  type: string
  *                  description: The name of the product
+ *                  example: Monitor Curvo LG 49 pulgadas
  *              price:
  *                  type: number
  *                  description: The price of the product
+ *                  example: 300
  *              availability:
  *                  type: boolean
  *                  description: The availability of the product
+ *                  example: true
  *          required:
  *              - name
  *              - price
  *          example:
  *              id: 1
- *              name: Product 1
- *              price: 100
+ *              name: Monitor Curvo LG 49 pulgadas
+ *              price: 300
  *              availability: true
+ */
+
+/**
+ * @swagger
+ * /api/products:
+ *   get:
+ *     summary: Get a list of products
+ *     tags: [Products]
+ *     description: Return a list of products
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
  */
 
 router.get("/", getProducts);
