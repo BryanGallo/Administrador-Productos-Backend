@@ -123,7 +123,7 @@ router.get(
 
 //*Recuerda en schema(linea 136) hay 2 opciones usar  $ref: '#/components/schemas/Product'
 //*Lo que tomara la base del Schema creado al inicio para dar un ejemplo de properties(linea 158)
-//* o como en este caso que no se usa y se indica las propiedades a enviar manualmente(linea 140 - 152) 
+//* o como en este caso que no se usa y se indica las propiedades a enviar manualmente(linea 140 - 152)
 /**
  * @swagger
  * /api/products:
@@ -313,7 +313,7 @@ router.put(
  *                       msg:
  *                         type: string
  *                         example: "Valor no válido"
- *        
+ *
  */
 
 router.patch(
@@ -322,6 +322,39 @@ router.patch(
     handleInputErrors,
     updateAvailability
 );
+
+/**
+ * @swagger
+ * /api/products/{id}:
+ *   delete:
+ *     summary: Delete a product by id
+ *     tags: [Products]
+ *     description: Return the deleted product
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The id of the product to delete
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Product not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: No existe el producto
+ */
 
 router.delete(
     "/:id",
