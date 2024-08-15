@@ -193,6 +193,61 @@ router.post(
     createProduct
 );
 
+/** 
+* @swagger
+* /api/products/{id}:
+*   put:
+*     summary: Update a product with user input
+*     tags: [Products]
+*     description: Return the Updated product
+*     parameters:
+*       - in: path
+*         name: id Product
+*         schema:
+*           type: integer
+*         required: true
+*         description: The id of the product to update
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             $ref: '#/components/schemas/Product'
+*     responses:
+*       200:
+*         description: Successful response
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/Product'
+*       400:
+*         description: Invalid input data
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 errors:
+*                   type: array
+*                   items:
+*                     type: object
+*                     properties:
+*                       msg:
+*                         type: string
+*                         oneOf:
+*                           - example: "El precio debe ser mayor a 0 o El nombre del producto no puede ir vacio "
+*       404:
+*         description: Product not found
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 error:
+*                   type: string
+*                   example: No existe el producto
+*/
+
 router.put(
     "/:id",
     param("id").isInt().withMessage("ID no válido"),
@@ -210,6 +265,8 @@ router.put(
     handleInputErrors,
     updateProduct
 );
+
+
 
 router.patch(
     "/:id",
