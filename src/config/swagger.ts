@@ -17,7 +17,9 @@ const options: swaggerJSDoc.Options = {
     },
     // si tienes diferentes rutas 
     // apis: ["./src/routes/*.ts","./src/routes*"],
-    apis: ["./src/routes/*.ts"],
+    apis: ["./src/routes/router.ts"],
+    // Si deseamos usar un archivo aparte para no generar mucho codigo en router
+    // apis: ["./src/routes/swaggerProduct.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

@@ -1,17 +1,4 @@
-import { Router } from "express";
-import { body, param } from "express-validator";
-import { handleInputErrors } from "../middleware";
-import {
-    getProducts,
-    getProductById,
-    createProduct,
-    updateProduct,
-    updateAvailability,
-    deleteProduct,
-} from "../controllers/productController";
-
-const router = Router();
-
+//*Schema General
 /**
  * @swagger
  * components:
@@ -51,6 +38,7 @@ const router = Router();
  *              availability: true
  */
 
+//* Get a products
 /**
  * @swagger
  * /api/products:
@@ -69,8 +57,8 @@ const router = Router();
  *                 $ref: '#/components/schemas/Product'
  */
 
-router.get("/", getProducts);
 
+//* Get a un product
 /**
  * @swagger
  * /api/products/{id}:
@@ -80,7 +68,7 @@ router.get("/", getProducts);
  *     description: Return a product by id (unique)
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: id Product
  *         schema:
  *           type: integer
  *         required: true
@@ -114,16 +102,8 @@ router.get("/", getProducts);
  *                   example: ID no válido
  */
 
-router.get(
-    "/:id",
-    param("id").isInt().withMessage("ID no válido"),
-    handleInputErrors,
-    getProductById
-);
 
-//*Recuerda en schema(linea 136) hay 2 opciones usar  $ref: '#/components/schemas/Product'
-//*Lo que tomara la base del Schema creado al inicio para dar un ejemplo de properties(linea 158)
-//* o como en este caso que no se usa y se indica las propiedades a enviar manualmente(linea 140 - 152) 
+//*Post para create Product
 /**
  * @swagger
  * /api/products:
@@ -175,23 +155,7 @@ router.get(
  *                           - example: "El precio debe ser mayor a 0 o El nombre del producto no puede ir vacio "
  */
 
-//Validacion con express-validator en el router
-//Router no es asyncrono asi que no usamos check usamos body
-router.post(
-    "/",
-    body("name")
-        .notEmpty()
-        .withMessage("El nombre del producto no puede ir vacio"),
-    body("price")
-        .isNumeric()
-        .withMessage("Valor no válido")
-        .custom((value) => value > 0)
-        .withMessage("El precio no puede ser menor o igual a 0")
-        .notEmpty()
-        .withMessage("El precio del producto no puede ir vacio"),
-    handleInputErrors,
-    createProduct
-);
+//* Put a un product
 
 /** 
 * @swagger
@@ -202,7 +166,7 @@ router.post(
 *     description: Return the Updated product
 *     parameters:
 *       - in: path
-*         name: id
+*         name: id Product
 *         schema:
 *           type: integer
 *         required: true
@@ -248,23 +212,7 @@ router.post(
 *                   example: No existe el producto
 */
 
-router.put(
-    "/:id",
-    param("id").isInt().withMessage("ID no válido"),
-    body("name")
-        .notEmpty()
-        .withMessage("El nombre del producto no puede ir vacio"),
-    body("price")
-        .isNumeric()
-        .withMessage("Valor no válido")
-        .custom((value) => value > 0)
-        .withMessage("El precio no puede ser menor o igual a 0")
-        .notEmpty()
-        .withMessage("El precio del producto no puede ir vacio"),
-    body("availability").isBoolean().withMessage("Valor no válido"),
-    handleInputErrors,
-    updateProduct
-);
+//* Patch a un product
 
 /**
  * @swagger
@@ -316,12 +264,7 @@ router.put(
  *        
  */
 
-router.patch(
-    "/:id",
-    param("id").isInt().withMessage("ID no válido"),
-    handleInputErrors,
-    updateAvailability
-);
+//* Delete a un product
 
 /**
  * @swagger
@@ -355,12 +298,3 @@ router.patch(
  *                   type: string
  *                   example: No existe el producto
  */
-
-router.delete(
-    "/:id",
-    param("id").isInt().withMessage("ID no válido"),
-    handleInputErrors,
-    deleteProduct
-);
-
-export default router;
