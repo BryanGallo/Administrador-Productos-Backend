@@ -80,7 +80,7 @@ router.get("/", getProducts);
  *     description: Return a product by id (unique)
  *     parameters:
  *       - in: path
- *         name: id Product
+ *         name: id
  *         schema:
  *           type: integer
  *         required: true
@@ -202,7 +202,7 @@ router.post(
 *     description: Return the Updated product
 *     parameters:
 *       - in: path
-*         name: id Product
+*         name: id
 *         schema:
 *           type: integer
 *         required: true
@@ -275,7 +275,7 @@ router.put(
  *     description: Return the Updated product
  *     parameters:
  *       - in: path
- *         name: id Product
+ *         name: id
  *         schema:
  *           type: integer
  *         required: true
@@ -313,16 +313,7 @@ router.put(
  *                       msg:
  *                         type: string
  *                         example: "Valor no válido"
- *        404:
- *         description: Product not found
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 error:
- *                   type: string
- *                   example: No existe el producto
+ *        
  */
 
 router.patch(
