@@ -266,7 +266,64 @@ router.put(
     updateProduct
 );
 
-
+/**
+ * @swagger
+ * /api/products/{id}:
+ *   patch:
+ *     summary: Update the availability of a product
+ *     tags: [Products]
+ *     description: Return the Updated product
+ *     parameters:
+ *       - in: path
+ *         name: id Product
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The id of the product to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               availability:
+ *                 type: boolean
+ *                 description: The availability of the product
+ *                 example: true
+ *     responses:
+ *       200:
+ *         description: Successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: Invalid input data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 errors:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       msg:
+ *                         type: string
+ *                         example: "Valor no válido"
+ *        404:
+ *         description: Product not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: No existe el producto
+ */
 
 router.patch(
     "/:id",
