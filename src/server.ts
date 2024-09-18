@@ -1,5 +1,6 @@
 import express from "express";
 import colors from "colors";
+import cors, { CorsOptions } from "cors";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger";
 import router from "./routes/router";
@@ -20,6 +21,21 @@ connectDB();
 
 //Instancia de Express
 const server = express();
+
+//* Permitir conexiones
+const corsOptions: CorsOptions = {
+    origin: function (origin, callback) {
+        console.log(origin);
+        
+        if (origin === process.env.FRONTEND_URL) {
+            callback(null, true);
+        } else {
+            callback(new Error("No permitido por CORS"));
+        }
+    },
+};
+//* Usamos use se ejecuta en todo tipo de peticion por ello lo usamos
+server.use(cors(corsOptions));
 
 server.use(express.json());
 
