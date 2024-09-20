@@ -5,7 +5,7 @@ import colors from "colors";
 const getProducts = async (req: Request, res: Response) => {
     try {
         const products = await Product.findAll({
-            attributes: ["id", "name", "price", "description"],
+            attributes: ["id", "name", "price", "description", "availability"],
         });
         res.status(200).json({
             data: products,
